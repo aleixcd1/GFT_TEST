@@ -1,0 +1,52 @@
+# Maven / build output
+target/
+build/
+out/
+*.class
+
+# Maven wrapper distribution cache should stay out, but wrapper files should be committed.
+.mvn/wrapper/dists/
+
+# Spring Initializr generated helper
+HELP.md
+
+# Logs
+*.log
+logs/
+
+# Runtime / local configuration
+.env
+.env.*
+!.env.example
+
+# H2 / local databases
+*.db
+*.mv.db
+*.trace.db
+
+# IDEs
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+
+# Eclipse / STS
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,119 @@
+openapi: 3.0.3
+info:
+  title: Prices API
+  description: REST API para consultar precios aplicables a productos por cadena y fecha
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /prices:
+    post:
+      summary: Consultar precio aplicable
+      operationId: getPrice
+      tags:
+        - Prices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceRequest'
+      responses:
+        '200':
+          description: Precio encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceResponse'
+        '400':
+          description: Parámetros inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Precio no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    PriceRequest:
+      type: object
+      required:
+        - productId
+        - brandId
+        - applicationDate
+      properties:
+        productId:
+          type: integer
+          format: int64
+          description: Identificador del producto
+          example: 35455
+        brandId:
+          type: integer
+          format: int64
+          description: Identificador de la cadena (1 = ZARA)
+          example: 1
+        applicationDate:
+          type: string
+          format: date-time
+          description: Fecha de aplicación del precio
+          example: "2020-06-14T10:00:00"
+
+    PriceResponse:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+          description: Identificador del producto
+          example: 35455
+        brandId:
+          type: integer
+          format: int64
+          description: Identificador de la cadena
+          example: 1
+        priceList:
+          type: integer
+          description: Identificador de la tarifa aplicable
+          example: 1
+        startDate:
+          type: string
+          format: date-time
+          description: Fecha inicio de aplicación
+          example: "2020-06-14T00:00:00"
+        endDate:
+          type: string
+          format: date-time
+          description: Fecha fin de aplicación
+          example: "2020-12-31T23:59:59"
+        price:
+          type: number
+          format: double
+          description: Precio final de venta
+          example: 35.50
+        currency:
+          type: string
+          description: ISO de la moneda
+          example: "EUR"
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Mensaje de error
+        timestamp:
+          type: string
+          format: date-time
